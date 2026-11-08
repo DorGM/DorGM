@@ -64,7 +64,7 @@ Sharing is done by passing the explicit outputs and explanations into the contex
 | --- | --- | --- |
 | [**Face Verification**](https://github.com/DorGM/face-verification-metric-learning) | Open-set face verification on people the model never saw. Compares Siamese and triplet CNNs under an identity-disjoint protocol: **0.770 test ROC-AUC** on 336 unseen identities, with false-accept and false-reject trade-offs. | PyTorch, OpenCV |
 | [**Neural Network from Scratch**](https://github.com/DorGM/neural-network-from-scratch-mnist) | Backprop and batch norm derived by hand and verified against autograd (about 1e-7). A controlled 12-run ablation isolates batch norm: **95.1% vs 93.8%** MNIST test accuracy, with 6× less seed-to-seed spread. | PyTorch tensors, pytest |
-| [**Synthetic Tabular Data with GANs**](https://github.com/DorGM/tabular-data-generation-gan-cgan) | Stress-tests GAN and cGAN census generators with validity gates, real-vs-synthetic detection and train-on-synthetic / test-on-real utility. Shows that plausible-looking rows are still **~100% detectable** and keep only **84%** of real-data utility. | PyTorch, scikit-learn |
+| [**Synthetic Tabular Data with GANs**](https://github.com/DorGM/tabular-data-generation-gan-cgan) | Conditional WGAN-GP with mode-specific normalization and domain-rule constraints that generates census rows. On 16,281 unseen real rows: **detection AUC 0.74** (SDV CTGAN: 0.94), **96%** of real-data utility, zero rule-breaking rows, no memorization. | PyTorch, scikit-learn, SDV |
 
 ### 🎯 Recommendation Systems & Search
 | Project | What it shows | Stack |

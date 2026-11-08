@@ -1,6 +1,6 @@
 # Hi, I'm Dor Meir 👋
 
-**Data Scientist** who takes problems from raw data to models that can be trusted. My work spans **computer vision, recommendation systems and search, AI security, NLP**, and the **pipelines and tools** that make data science reproducible.
+**Data Scientist** who takes problems from raw data to models that can be trusted. My research focuses on **collective decision-making with humans and LLM agents**, and my work spans **computer vision, recommendation systems and search, AI security, NLP**, and the **pipelines and tools** that make data science reproducible.
 
 **How I work**
 - **Frame the question first**, then pick the model.
@@ -9,6 +9,55 @@
 - **Ship clean, tested, reproducible code.**
 
 ---
+
+## 🔬 Featured Research: Learning *How* a Group Should Decide, From Human Crowds to LLM Agent Teams
+
+> **Question:** When a group answers a hard reasoning problem, can a model predict *which aggregation method* will recover the correct answer for that specific group, and how does sharing reasoning (between people or between LLM agents) change decision quality?
+
+**Setting.** Multi-choice reasoning problems with **12 candidate answers and exactly one correct answer**. This extends prior doctoral research on *binary* group decisions to a much richer structure of agreement and disagreement.
+
+### My contributions
+| Area | What I did |
+| --- | --- |
+| **Problem extension** | Generalized the task from binary to **12-option** decisions, adapting preprocessing and every aggregation rule to a richer consensus structure. |
+| **Representation** | Extended the CDMCR group-level feature set and added **sub-group features** (inspired by the *inner crowd* idea) that describe the internal structure of each group. |
+| **Aggregation-method prediction (AMP)** | Implemented the aggregation methods and trained **XGBoost and deep neural networks** to predict, per group, which method will succeed. |
+| **Interaction** | Added an **exposure-and-revision round** for human participants (see others' explanations, then update) and **N deliberation rounds** for agent groups. |
+| **LLM agent environment** | Built multi-agent groups mixing LLMs of **different capability levels**, comparing individual work against collaborative work. |
+
+### How AMP works
+- **Unit of analysis:** one group answering one problem, at a given round.
+- **Raw input per participant:** answer, confidence, perceived difficulty, predicted support for each answer, and a free-text explanation.
+- **Features `X`:** CDMCR group descriptors plus the extensions and sub-group features. Sub-groups are used only to describe the group's internal structure; they are not treated as new independent groups.
+- **Labels `y` (multi-label):** each aggregator is run on the group's responses and compared with the ground truth. Several methods can be correct at once, or none at all.
+- **Inference:** predict a success probability for every aggregator, select the most likely one, and return its answer.
+
+```
+y_i  = 1[ f_i(R) = a* ]                    # did aggregator i recover the true answer?
+i*   = argmax_i  P̂( y_i = 1 | X )          # pick the aggregator most likely to succeed
+answer = f_{i*}(R)
+```
+
+Training is **multi-label**. The final decision is a **single aggregator choice**, and the predicted probabilities do not need to sum to 1.
+
+### LLM agent groups: two separate sharing mechanisms
+| Mechanism | What is shared | How it advances |
+| --- | --- | --- |
+| **Between agents in a group** | Each agent's explanation from the previous round | Synchronous rounds: all agents finish a round before the group moves on |
+| **Inside a multi-model ensemble** | Outputs and reasoning, including from the current round | Models exchange information to converge on one joint answer |
+
+Sharing is done by passing the explicit outputs and explanations into the context of the next model calls, so each model can weigh the reasoning it received and revise its decision. Only generated explanations are shared, never parameters or internal state.
+
+**Infrastructure:** Google AI Studio · OpenRouter · Groq · OpenAI · Anthropic APIs.
+
+### Status and early finding
+- **AMP pipeline:** aggregation methods, features, deliberation rounds, sub-group features and prediction models are implemented and evaluated.
+- **Agent experiments:** nearing completion. Individual and collaborative runs have been carried out.
+- **Early finding:** in my experiments so far, **groups of weaker models aggregated together outperformed individual work**. The analysis is ongoing, including separating the contribution of aggregation from that of reasoning-sharing.
+
+`Python` `XGBoost` `PyTorch` `Multi-label learning` `Collective intelligence` `Multi-agent LLMs` `Prompt orchestration`
+
+## 📂 Projects
 
 ### 👁️ Computer Vision & Deep Learning
 | Project | What it shows | Stack |

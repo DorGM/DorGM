@@ -64,7 +64,7 @@ Sharing is done by passing the explicit outputs and explanations into the contex
 | --- | --- | --- |
 | [**Face Verification**](https://github.com/DorGM/face-verification-metric-learning) | Open-set face verification on people the model never saw. Compares Siamese and triplet CNNs under an identity-disjoint protocol: **0.770 test ROC-AUC** on 336 unseen identities, with false-accept and false-reject trade-offs. | PyTorch, OpenCV |
 | [**Neural Network from Scratch**](https://github.com/DorGM/neural-network-from-scratch-mnist) | Backprop and batch norm derived by hand and verified against autograd (about 1e-7). A controlled 12-run ablation isolates batch norm: **95.1% vs 93.8%** MNIST test accuracy, with 6× less seed-to-seed spread. | PyTorch tensors, pytest |
-| [**Synthetic Tabular Data with GANs and Diffusion**](https://github.com/DorGM/tabular-data-generation-gan-cgan) | Conditional WGAN-GP, TabDDPM- and TabSyn-style diffusion models and a GAN-diffusion hybrid that generate census rows under domain-rule constraints. On 16,281 unseen real rows: **detection AUC about 0.70** (SDV CTGAN: 0.94), **98%** of real-data utility, zero rule-breaking rows, no copied training rows. | PyTorch, scikit-learn, SDV |
+| [**Synthetic Tabular Data with GANs and Diffusion**](https://github.com/DorGM/tabular-data-generation-gan-cgan) | Compares a conditional WGAN-GP, TabDDPM- and TabSyn-style diffusion models and a GAN-diffusion hybrid that generate census rows under domain rules. On the official Adult test file the best models reach **detection AUC about 0.70** (SDV CTGAN: 0.94) with **96 to 98%** of real-data utility. A pre-registered, one-time check on fresh **ACS California 2018** data confirmed that latent diffusion and the hybrid are the most realistic, and exposed a flaw: the training-time rule penalty erases rare categories. | PyTorch, scikit-learn, SDV |
 
 ### 🎯 Recommendation Systems & Search
 | Project | What it shows | Stack |
@@ -94,6 +94,20 @@ Sharing is done by passing the explicit outputs and explanations into the contex
 
 ---
 
-**Coming next:** a joint project combining GAN-based data generation with the face-verification pipeline.
+## 🚧 Coming next
+
+**Research, going deeper.** Improving group decision-making on complex reasoning problems by combining machine learning and AI:
+- predicting, from participants' answers, confidence and explanations, which method of combining answers will reach the correct decision;
+- measuring how exposure to other people's opinions changes the outcome;
+- adding LLM agents as group members, and studying how multi-round deliberation between humans and AI agents affects accuracy and convergence to a shared decision.
+
+**Synthetic data**
+- **Applying domain rules without losing rare groups:** compare a joint column of valid combinations, a penalty at low noise only, and a penalty on sampled rows, scored by how well each keeps the frequency of every rare category.
+- **Does synthetic data help a classifier?** A pre-registered test of whether adding synthetic rows to real data beats training on real data alone, across data sizes and for rare subgroups, against simple controls such as resampling real rows.
+- **A context-steered generator:** an LLM turns a scenario described in plain language into a checkable spec, and a diffusion model trained on real data generates rows that match it.
+- **Privacy:** membership-inference attacks on the saved generators, and DP training to measure the privacy-utility trade-off.
+- **Group balancing and faces:** conditional generation to rebalance under-represented groups, and a joint project combining generation with the face-verification pipeline.
+
+**Personal AI Dashboard:** LLM-based analytics built as a LangGraph agent workflow, with a benchmark of free (open-weight) LLMs against paid APIs on accuracy, cost and latency.
 
 **Toolbox:** Python · PyTorch · scikit-learn · Hugging Face · OpenCV · pandas · NumPy · PySpark · GCP · FastAPI · Streamlit · Plotly · pytest · Git

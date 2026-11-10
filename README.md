@@ -96,10 +96,7 @@ Sharing is done by passing the explicit outputs and explanations into the contex
 
 ## 🚧 Coming next
 
-**Research, going deeper.** Improving group decision-making on complex reasoning problems by combining machine learning and AI:
-- predicting, from participants' answers, confidence and explanations, which method of combining answers will reach the correct decision;
-- measuring how exposure to other people's opinions changes the outcome;
-- adding LLM agents as group members, and studying how multi-round deliberation between humans and AI agents affects accuracy and convergence to a shared decision.
+**Research code:** the group decision-making research above, including the human and LLM-agent experiments, will be published on my GitHub soon.
 
 **Synthetic data**
 - **Applying domain rules without losing rare groups:** compare a joint column of valid combinations, a penalty at low noise only, and a penalty on sampled rows, scored by how well each keeps the frequency of every rare category.
